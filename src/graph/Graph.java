@@ -6,7 +6,7 @@ public class Graph {
 
     private final int V;    //顶点数
     private int E;  //边数
-    private Queue<Integer>[] adj;   //顶点的相邻顶点的索引值组成的队列所组成的队列
+    private Queue<Integer>[] adj;   //顶点的相邻顶点的索引值组成的队列所组成的数组
 
     public Graph(int V) {
         this.V = V;
