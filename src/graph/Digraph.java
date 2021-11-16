@@ -5,7 +5,7 @@ import linear.Queue;
 public class Digraph {
     private final int V;    //顶点数
     private int E;  //有向边数
-    private Queue<Integer>[] adj;   //各顶点(0,1,2,...,V-1)的相邻顶点（指向相邻顶点）组成的队列所组成的队列
+    private Queue<Integer>[] adj;   //各顶点(0,1,2,...,V-1)的相邻顶点（指向相邻顶点）组成的队列所组成的数组
 
     public Digraph(int V) {
         this.V = V;
