@@ -4,13 +4,13 @@ import linear.Queue;
 import tree.IndexMinPriorityQueue;
 
 public class PrimMST {
-    //索引代表顶点，数组存放顶点与最小生成树之间的权重最小的边
+    //索引代表顶点，数组存放顶点与最小生成树之间的权重最小的横切边
     private WeighedEdge[] edgeTo;
     //索引代表顶点，数组存放顶点与最小生成树之间的权重最小的边的权重
     private double[] distTo;
     //索引代表顶点，标记该顶点是否已经在最小生成树中
     private boolean[] marked;
-    //存放当前最小树的顶点和其他顶点的有效横切边，关联索引即标识顶点
+    //存放当前最小树的顶点和其他顶点的有效横切边的权重，关联索引即标识顶点
     private IndexMinPriorityQueue<Double> pq;
 
     public PrimMST(EdgeWeightedGraph G) {
@@ -20,7 +20,7 @@ public class PrimMST {
             distTo[i] = Double.POSITIVE_INFINITY;
         }
         this.marked = new boolean[G.V()];
-        pq = new IndexMinPriorityQueue<Double>(G.V());
+        pq = new IndexMinPriorityQueue<>(G.V());
 
         distTo[0] = 0.0;
         pq.insert(0, 0.0);
@@ -38,7 +38,7 @@ public class PrimMST {
                 continue;   //顶点w已经在最小树中时不再考察
             }
 
-            //判断边e的权重是否小于顶点w记录的与最小树的最小权重横切边的最小权重
+            //当顶点w当前依附边的权重大于历史记录的顶点关联最小权重，则不必进行数据更新
             if (e.getWeight() < distTo[w]) {
                 edgeTo[w] = e;  //记录最短边
                 distTo[w] = e.getWeight();  //记录最小权重

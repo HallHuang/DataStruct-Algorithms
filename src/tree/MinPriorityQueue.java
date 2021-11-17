@@ -44,6 +44,7 @@ public class MinPriorityQueue<T extends Comparable<T>> {
     public T delMin() {
         T min = items[1];
         exch(1, N);
+        items[N] = null;
         N--;
         sink(1);
         return min;
@@ -52,46 +53,39 @@ public class MinPriorityQueue<T extends Comparable<T>> {
     //使用上浮算法，使索引k处的元素能在堆中处于一个正确的位置
     private void swim(int k) {
         //通过循环比较当前结点和其父结点的大小
-
         while (k > 1) {
-
             if (less(k, k / 2)) {
                 exch(k, k / 2);
             }
-
             k = k / 2;
         }
     }
 
     //使用下沉算法，使索引k处的元素能在堆中处于一个正确的位置
     private void sink(int k) {
-        //通过循环比较当前结点和其子结点中的较小值
-
+        //通过循环比较当前分支结点和其子结点中的较小值
         while (2 * k <= N) {
-            //1.找到子结点中的较小值
+            //1.找到子结点中的较小值的索引
             int min;
+
+            //考虑全部右子结点和没有右子结点两种情况
             if (2 * k + 1 <= N) {
                 if (less(2 * k, 2 * k + 1)) {
                     min = 2 * k;
                 } else {
                     min = 2 * k + 1;
                 }
-            } else {
+            } else {//最后一个分枝结点没有右子结点
                 min = 2 * k;
             }
 
             //2.判断当前结点和较小值的大小
-
             if (less(k, min)) {
                 break;
             }
-
             exch(k, min);
-
             k = min;
         }
-
-
     }
 
 }

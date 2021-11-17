@@ -21,7 +21,7 @@ public class KruskalMST {
         this.pq = new MinPriorityQueue<>(G.E());
 
         for (WeighedEdge e : G.edges()) {
-            pq.insert(e);
+            pq.insert(e);   //所有加权边入列，按权重进行自动排序
         }
 
         while (!pq.isEmpty() && mst.size() < G.V() - 1) {
