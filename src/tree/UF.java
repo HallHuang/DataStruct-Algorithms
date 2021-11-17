@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 public class UF {
 
-    //分组标识号数组/索引代表的结点的父结点标识编号
+    //分组标识号数组 或者 索引代表的结点的父结点标识编号
     private int[] eleAndGroup;
     private int count;
 

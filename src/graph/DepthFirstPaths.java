@@ -4,9 +4,9 @@ import linear.Stack;
 
 public class DepthFirstPaths {
 
-    private boolean[] marked;
-    private int s;
-    private int[] edgeTo;
+    private boolean[] marked;   //标记是否搜索过
+    private int s;  //路径起点
+    private int[] edgeTo;   //索引值和存储值代表顶点，存储值顶点指向索引值顶点
 
     public DepthFirstPaths(Graph G, int s) {
         this.marked = new boolean[G.V()];
@@ -35,11 +35,12 @@ public class DepthFirstPaths {
         }
 
         Stack<Integer> path = new Stack<>();
+        //从终点向起点遍历边指数组，直到回到起点的指向顶点为止
         while (v != s) {
             path.push(v);
             v = edgeTo[v];
         }
-        path.push(v);
+        path.push(v);   //将起点入栈
         return path;
     }
 
