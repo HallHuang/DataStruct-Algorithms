@@ -1,15 +1,14 @@
 package graph;
 
 import linear.Queue;
-import tree.IndexMinPriorityQueue;
 import tree.MinPriorityQueue;
 import tree.UF;
 
 public class KruskalMST {
 
-    private Queue<WeighedEdge> mst;
+    private Queue<WeightedEdge> mst;
     private UF uf;
-    private MinPriorityQueue<WeighedEdge> pq;
+    private MinPriorityQueue<WeightedEdge> pq;
 
     public KruskalMST(EdgeWeightedGraph G) {
         //保存最小生成树的所有边
@@ -20,12 +19,12 @@ public class KruskalMST {
         //存储图中所有的边，使用最小优先队列，对边按照权重进行排序
         this.pq = new MinPriorityQueue<>(G.E());
 
-        for (WeighedEdge e : G.edges()) {
+        for (WeightedEdge e : G.edges()) {
             pq.insert(e);   //所有加权边入列，按权重进行自动排序
         }
 
         while (!pq.isEmpty() && mst.size() < G.V() - 1) {
-            WeighedEdge e = pq.delMin();    //权重最小的边
+            WeightedEdge e = pq.delMin();    //权重最小的边
             int v = e.either();
             int w = e.other(v);
             if (uf.connected(v, w)) {
@@ -36,7 +35,7 @@ public class KruskalMST {
         }
     }
 
-    public Queue<WeighedEdge> edges() {
+    public Queue<WeightedEdge> edges() {
         return mst;
     }
 }
