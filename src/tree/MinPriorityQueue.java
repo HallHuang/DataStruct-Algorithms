@@ -6,7 +6,6 @@ public class MinPriorityQueue<T extends Comparable<T>> {
     //记录堆中元素的个数
     private int N;
 
-
     public MinPriorityQueue(int capacity) {
         this.items = (T[]) new Comparable[capacity + 1];
         this.N = 0;
