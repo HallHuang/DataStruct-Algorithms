@@ -58,7 +58,6 @@ public class Queue<T> implements Iterable<T> {
     }
 
     public void enqueue(T t) {
-
         Node newNode = new Node(t, null);
         if (isEmpty()) {
             last = newNode;

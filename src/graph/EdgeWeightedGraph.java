@@ -8,7 +8,7 @@ public class EdgeWeightedGraph {
     //边的总数
     private int E;
     //某一顶点的邻接表(保存邻边)
-    private Queue<WeighedEdge>[] adj;
+    private Queue<WeightedEdge>[] adj;
 
     //创建一个含有V个顶点的空加权有向图
     public EdgeWeightedGraph(int V) {
@@ -20,7 +20,7 @@ public class EdgeWeightedGraph {
         this.adj = new Queue[V];
 
         for (int i = 0; i < adj.length; i++) {
-            adj[i] = new Queue<WeighedEdge>();
+            adj[i] = new Queue<WeightedEdge>();
         }
     }
 
@@ -35,7 +35,7 @@ public class EdgeWeightedGraph {
     }
 
     //在加权无向图中添加一条边
-    public void addEdge(WeighedEdge e) {
+    public void addEdge(WeightedEdge e) {
         int v = e.either();
         int w = e.other(v);
         adj[v].enqueue(e);
@@ -44,11 +44,11 @@ public class EdgeWeightedGraph {
     }
 
     //获取所有边
-    public Queue<WeighedEdge> edges() {
-        Queue<WeighedEdge> allEdges = new Queue<>();
+    public Queue<WeightedEdge> edges() {
+        Queue<WeightedEdge> allEdges = new Queue<>();
         //遍历所有顶点，将该顶点的邻接边仅入列一次
         for (int v = 0; v < V; v++) {
-            for (WeighedEdge edge : adj[v]) {
+            for (WeightedEdge edge : adj[v]) {
                 if (edge.other(v) < v) {
                     allEdges.enqueue(edge); //通过两端顶点值比较，将边只入列一次
                 }
@@ -57,7 +57,7 @@ public class EdgeWeightedGraph {
         return allEdges;
     }
 
-    public Queue<WeighedEdge> adj(int v) {
+    public Queue<WeightedEdge> adj(int v) {
         return adj[v];
     }
 
