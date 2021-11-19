@@ -6,9 +6,9 @@ import tree.UF;
 
 public class KruskalMST {
 
-    private Queue<WeightedEdge> mst;    //保存多个权重较小的横切边
-    private UF uf;  //标记各顶点的分组标识号
-    private MinPriorityQueue<WeightedEdge> pq;  //对所有边按照权重从小到大进行排序保存
+    private Queue<WeightedEdge> mst;
+    private UF uf;
+    private MinPriorityQueue<WeightedEdge> pq;
 
     public KruskalMST(EdgeWeightedGraph G) {
         //保存最小生成树的所有边

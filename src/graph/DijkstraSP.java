@@ -108,7 +108,7 @@ public class DijkstraSP {
         DijkstraSP dijkstraSP = new DijkstraSP(G, 0);
         Queue<DirectedWeightedEdge> directedWeightedEdges = dijkstraSP.pathTo(5);
         for (DirectedWeightedEdge edge : directedWeightedEdges) {
-            System.out.print(edge.from() + "-" + edge.to() + " ");
+            System.out.print(edge.from() + "->" + edge.to() + " ");
         }
 
     }
