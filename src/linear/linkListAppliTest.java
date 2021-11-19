@@ -1,6 +1,6 @@
 package linear;
 
-public class dataTest {
+public class linkListAppliTest {
 
     private static class Node<T> {
         public T item;
