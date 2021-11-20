@@ -3,10 +3,10 @@ package sort;
 import java.util.Arrays;
 
 /**
- * 冒泡排序：相邻比较，较大置后
- * 时间复杂度：O(n^2-n) = O(n^2)
+ * 选择排序：逐个比较，较小置首
+ * 时间复杂度：O((n^2)/2+(n/2)-1) = O(n^2)
  */
-public class BubbleSort {
+public class SelectionSort {
 
     public static boolean greater(Comparable v, Comparable w) {
         return v.compareTo(w) > 0;
@@ -19,19 +19,20 @@ public class BubbleSort {
     }
 
     public static void sort(Comparable[] a) {
-        //每次从开始(j=0)到已确定位置的最小的较大元素(j<i)进行排序
-        for (int i = a.length - 1; i > 0; i--) {
-            for (int j = 0; j < i; j++) {
-                if (greater(a[j], a[j + 1])) {
-                    exch(a, j, j + 1);
+        for (int i = 0; i < a.length - 1; i++) {
+            int minIndex = i;
+            for (int j = i + 1; j < a.length; j++) {
+                if (greater(a[minIndex], a[j])) {
+                    minIndex = j;
                 }
             }
+            exch(a, i, minIndex);
         }
     }
 
     public static void main(String[] args) {
         Integer[] arr = {6, 7, 1, 9, 2, 5, 4, 3, 8};
-        BubbleSort.sort(arr);
+        SelectionSort.sort(arr);
         System.out.println(Arrays.toString(arr));
     }
 }
