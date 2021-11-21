@@ -8,11 +8,11 @@ import java.util.Arrays;
  */
 public class InsertionSort {
 
-    public static boolean greater(Comparable v, Comparable w) {
+    private static boolean greater(Comparable v, Comparable w) {
         return v.compareTo(w) > 0;
     }
 
-    public static void exch(Comparable[] a, int i, int j) {
+    private static void exch(Comparable[] a, int i, int j) {
         Comparable temp = a[i];
         a[i] = a[j];
         a[j] = temp;

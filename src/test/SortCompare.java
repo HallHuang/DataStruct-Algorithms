@@ -1,6 +1,7 @@
 package test;
 
 import sort.InsertionSort;
+import sort.MergeSort;
 import sort.ShellSort;
 
 import java.io.BufferedReader;
@@ -30,6 +31,7 @@ public class SortCompare {
 
         testInsertion(a); //大约21500ms
         testShell(a);   //大约25ms
+        testMerge(a);   //大于50ms
     }
 
     //测试希尔排序
@@ -56,4 +58,17 @@ public class SortCompare {
         //4.算出程序执行的时间并输出
         System.out.println("插入排序执行的时间为：" + (end - start) + "毫秒");
     }
+
+    //测试归并排序
+    public static void testMerge(Integer[] a) {
+        //1.获取执行之前的时间
+        long start = System.currentTimeMillis();
+        //2.执行算法代码
+        MergeSort.sort(a);
+        //3.获取执行之后的时间
+        long end = System.currentTimeMillis();
+        //4.算出程序执行的时间并输出
+        System.out.println("归并排序执行的时间为：" + (end - start) + "毫秒");
+    }
+
 }
