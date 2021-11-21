@@ -30,7 +30,7 @@ public class BubbleSort {
     }
 
     public static void main(String[] args) {
-        Integer[] arr = {6, 7, 1, 9, 2, 5, 4, 3, 8};
+        Integer[] arr = {6, 7, 1, 9, 2, 5, 4, 3, 8, 0};
         BubbleSort.sort(arr);
         System.out.println(Arrays.toString(arr));
     }

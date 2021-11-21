@@ -24,7 +24,7 @@ public class ShellSort {
             h = 2 * h + 1;
         }//获取初始增长量,即h初值
 
-        //变步长迭代更新，从后往前按照间隔h进行比较/交换
+        //变步长迭代更新，从后往前按照索引间隔h进行比较/交换
         while (h >= 1) {
             for (int i = h; i < a.length; i++) {//i=h, h+1, h+2, ..., a.length-1
                 for (int j = i; j >= h && greater(a[j - h], a[j]); j -= h) {
