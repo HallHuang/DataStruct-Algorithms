@@ -39,8 +39,9 @@ public class QuickSort {
         int left = lo;
         int right = hi + 1;
 
+        //交换左右两端分别小于和大于分界值的元素位置
         while (true) {
-            //先从右往左遍历查找小于key的元素对应的索引值
+            //先从右往左遍历查找小于key的元素对应的索引值，找到一个就跳出循环
             while (less(key, a[--right])) {
                 if (right == lo) {
                     break;
