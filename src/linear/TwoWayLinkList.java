@@ -2,8 +2,12 @@ package linear;
 
 import java.util.Iterator;
 
+/**
+ * 双向链表
+ * @param <T>
+ */
 public class TwoWayLinkList<T> implements Iterable<T> {
-    private Node head;
+    private final Node head;
     private Node last;
     private int N;
 
@@ -13,33 +17,10 @@ public class TwoWayLinkList<T> implements Iterable<T> {
         this.N = 0;
     }
 
-    @Override
-    public Iterator<T> iterator() {
-        return null;
-    }
-
-    private class TwoWayIterator implements Iterator {
-        private Node node;
-
-        public TwoWayIterator() {
-            this.node = head;
-        }
-
-        @Override
-        public boolean hasNext() {
-            return node.next != null;
-        }
-
-        @Override
-        public Object next() {
-            return node.next.item;
-        }
-    }
-
     private class Node {
         private Node pre;
         private Node next;
-        private T item;
+        private final T item;
 
         public Node(Node preNode, T item, Node nextNode) {
             this.pre = preNode;
@@ -101,7 +82,7 @@ public class TwoWayLinkList<T> implements Iterable<T> {
     }
 
     public void insert(T t) {
-        if (isEmpty()) {
+        if (isEmpty()) {//初始化last
             Node newNode = new Node(head, t, null);
             head.next = newNode;
             last = newNode;
@@ -114,23 +95,27 @@ public class TwoWayLinkList<T> implements Iterable<T> {
     }
 
     public void insert(int index, T t) {
-        if (isEmpty()) {
-            Node newNode = new Node(head, t, null);
-            head.next = newNode;
-            last = newNode;
-        } else {
+        if (!isEmpty()) {
             Node preNode = getNode(index - 1);
             Node curNode = preNode.next;
-
             Node newNode = new Node(preNode, t, curNode);
             curNode.pre = newNode;
             preNode.next = newNode;
+            N++;
+        } else if (index == 0) {//isEmpty() && index == 0
+            Node newNode = new Node(head, t, null);
+            head.next = newNode;
+            last = newNode;
+            N++;
+        } else { // isEmpty() && index != 0
+            return;
         }
-        N++;
     }
 
     public T remove(int index) {
-        if (index != N - 1) {
+        if (index < 0 || index > N - 1) {
+            return null;
+        } else if (index != N - 1) {
             Node curNode = getNode(index);
             Node preNode = curNode.pre;
             Node nextNode = curNode.next;
@@ -158,22 +143,15 @@ public class TwoWayLinkList<T> implements Iterable<T> {
         return -1;
     }
 
-    public String toListString() {
+    @Override
+    public String toString() {
         StringBuilder sb = new StringBuilder();
         Node node = head;
         do {
             node = node.next;
-            sb.append(node.item.toString() + '\n');
+            sb.append(node.item.toString()).append(", ");
         } while (node.next != null);
-        return sb.toString();
-    }
-
-    public void reverse() {
-        if (isEmpty()) {
-            return;
-        }
-        last = head.next;
-        reverse(head.next);
+        return sb.toString().substring(0, sb.length() - 2);
     }
 
     public T getMid() {
@@ -189,22 +167,56 @@ public class TwoWayLinkList<T> implements Iterable<T> {
         }
     }
 
+    //倒序排列
+    public void reverse() {
+        if (isEmpty()) {
+            return;
+        }
+        last = head.next;
+        reverse(head.next);
+    }
+
     public Node reverse(Node curNode) {
         if (curNode.next == null) {
             //head-->last
             head.next = curNode;
+            curNode.pre = head;
             return curNode;
             //下一步： last.next = preLast; preLast.next = null;
         }
-        Node node = reverse(curNode.next);
-        node.next = curNode;    //curNode.next.next = curNode
+        Node node = reverse(curNode.next);  //递归到底，满足返回条件
+        node.next = curNode;
+        curNode.pre = node;
         curNode.next = null;
         return curNode;
     }
 
-    public static void main(String[] args) {
-        TwoWayLinkList<String> ll1 = new TwoWayLinkList<>();
+    @Override
+    public Iterator<T> iterator() {
+        return new TwoWayIterator();
+    }
 
+    private class TwoWayIterator implements Iterator {
+        private final Node node;
+
+        public TwoWayIterator() {
+            this.node = head;
+        }
+
+        @Override
+        public boolean hasNext() {
+            return node.next != null;
+        }
+
+        @Override
+        public Object next() {
+            return node.next.item;
+        }
+    }
+
+    public static void main(String[] args) {
+
+        TwoWayLinkList<String> ll1 = new TwoWayLinkList<>();
         ll1.insert("abby");
         ll1.insert("folly");
         ll1.insert("confident");
@@ -214,26 +226,15 @@ public class TwoWayLinkList<T> implements Iterable<T> {
         ll1.insert("volly");
         ll1.insert("yews");
         ll1.insert(3, "hall");
-
-        //ll1.reverse();
-
         ll1.insert("hwang");
         ll1.insert("hwangl");
-        System.out.println(ll1.toListString());
-        System.out.println(ll1.getMid());
-        ll1.remove(2);
-        System.out.println(ll1.toListString());
-        System.out.println();
+//        System.out.println(ll1);
+//        System.out.println(ll1.getMid());
+//        ll1.remove(2);
+//        System.out.println(ll1);
         ll1.reverse();
-        System.out.println(ll1.toListString());
-        ll1.insert("jinan");
-        System.out.println("------------------------");
-        ll1.reverse();
-        ll1.remove(3);
-        System.out.println(ll1.toListString());
-        System.out.println("mid:" + ll1.getMid());
-
-
+        System.out.println("---------reverse-----------");
+        System.out.println(ll1);
+        System.out.println(ll1.getNode(3).pre.item);
     }
-
 }
