@@ -1,10 +1,15 @@
 package linear;
 
+/**
+ * 单向链表
+ * @param <T>
+ */
 public class LinkList<T> {
 
-    private Node head;
+    private final Node head;
     private int N;
 
+    //定义数据结点类
     public class Node {
         public T item;
         public Node next;
@@ -36,6 +41,7 @@ public class LinkList<T> {
         return N == 0;
     }
 
+    //遍历式查询/获取元素
     public T get(int index) {
         if (index < N && index >= 0) {
             Node node = head;
@@ -47,21 +53,21 @@ public class LinkList<T> {
         return null;
     }
 
+    //遍历式获取尾结点，之后该尾结点指向新结点
     public void insert(T t) {
         //新建一个结点
         Node newNode = new Node(t, null);
-        //将尾结点指向新结点
-        Node node = head;
-        while (node.next != null) {
-            node = node.next;
+        Node last = head;
+        while (last.next != null) {
+            last = last.next;
         }
-        node.next = newNode;
+        last.next = newNode;
         //长度增1
         N++;
     }
 
+    //获取当前index-1、index处的node,将新结点链式置中
     public void insert(int index, T t) {
-        //获取当前index、index-1处的node
         Node preNode = head;
         for (int i = 0; i <= index - 1; i++) {
             preNode = preNode.next; //i = 0,1,2,3,...,index
@@ -72,11 +78,10 @@ public class LinkList<T> {
         Node newNode = new Node(t, curNode);
         //将index-1处结点指向新结点
         preNode.next = newNode;
-
-        //长度自增1
         N++;
     }
 
+    //index-1处的node直接指向index+1处的node
     public T remove(int index) {
         //获取当前index、index-1、index+1处的node
         Node preNode = head;
@@ -88,10 +93,7 @@ public class LinkList<T> {
 
         //preNode指向nextNode
         preNode.next = nextNode;
-
-        //长度减1
         N--;
-
         return curNode.item;
     }
 
@@ -111,7 +113,7 @@ public class LinkList<T> {
         StringBuilder sb = new StringBuilder();
         Node node = head.next;
         for (int i = 0; i < N; i++) {
-            sb.append(node.item + "\n");
+            sb.append(node.item).append("\n");
             node = node.next;
         }
         return sb.toString();
@@ -123,16 +125,11 @@ public class LinkList<T> {
         ll1.insert("paul");
         ll1.insert("keil");
         ll1.insert("jack");
-
         ll1.insert("hall");
         ll1.insert("qiyi");
-        System.out.println(ll1.toString());
-
+        System.out.println(ll1);    //测试重写的toString()
         System.out.println(ll1.get(1));
-
         System.out.println(ll1.indexOf("hall"));
 
     }
-
-
 }
