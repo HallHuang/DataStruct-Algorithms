@@ -2,13 +2,18 @@ package linear;
 
 import java.util.Iterator;
 
-public class SequentialList<T> {
+/**
+ * 顺序表
+ * 基于数组
+ * @param <T>
+ */
+public class SequentialList<T> implements Iterable<T> {
 
     private T[] array;
     private int N;
 
     public SequentialList(int capacity) {
-        this.array = (T[]) new Object[capacity];
+        this.array = (T[]) new Object[capacity];    //容量有限
         this.N = 0;
     }
 
@@ -25,15 +30,18 @@ public class SequentialList<T> {
         return this.N == 0;
     }
 
+    public int size() {
+        return N;
+    }
+
     public T get(int i) {
         return array[i];
     }
 
     //尾加
     public void insert(T t) {
-
         if (N == array.length) {
-            reSize(2 * array.length);
+            reSize(2 * array.length);   //扩容
         }
         array[N++] = t;
     }
@@ -41,17 +49,24 @@ public class SequentialList<T> {
     private void reSize(int newSize) {
         T[] temp = array;
         array = (T[]) new Object[newSize];
-        for (int k = 0; k < N; k++) {
-            array[k] = temp[k];
-        }
+        if (N >= 0)
+            System.arraycopy(temp, 0, array, 0, N);
     }
 
     public void insert(int i, T t) {
 
-        if (N == array.length) {
-            reSize(2 * array.length);
+        if (i > N - 1) {//越界
+            return;
         }
-        //i后元素后移一位
+
+        if (i == N) {//在末尾之后添加元素时进行数组扩容
+            reSize(2 * array.length);
+            array[i] = t;
+            N++;
+            return;
+        }
+
+        //i后元素后移一位，末尾索引由N-1变为N
         for (int k = i + 1; k <= N; k++) {
             array[k] = array[k - 1];
         }
@@ -61,6 +76,11 @@ public class SequentialList<T> {
 
 
     public T remove(int i) {
+
+        if (i > N - 1) {
+            return null;
+        }
+
         T eleRemove = array[i];
         //i后元素前移一位
         for (int k = i; k <= N - 2; k++) {
@@ -68,9 +88,11 @@ public class SequentialList<T> {
         }
         N--;
 
+        //元素过少时减少数组容量
         if (N < array.length / 4) {
             reSize(array.length / 2);
         }
+
         return eleRemove;
     }
 
@@ -84,6 +106,7 @@ public class SequentialList<T> {
         return -1;
     }
 
+    @Override
     public Iterator<T> iterator() {
         return new SeqIterator();
     }
@@ -102,10 +125,11 @@ public class SequentialList<T> {
 
         @Override
         public T next() {
-            return array[cursor++];
+            return array[cursor++]; //获取当前元素并使指针增1
         }
     }
 
+    //测试
     public static void main(String[] args) {
 
         SequentialList<String> sl1 = new SequentialList<>(4);
@@ -113,10 +137,19 @@ public class SequentialList<T> {
         sl1.insert("world");
         sl1.insert("Bill");
         sl1.insert("Clinton");
+        sl1.insert("Bush");
 
         Iterator<String> iterator = sl1.iterator();
         while (iterator.hasNext()) {
             System.out.println(iterator.next());
         }
+
+        System.out.println("index of Bill: " + sl1.indexOf("Bill"));
+        System.out.println(sl1.get(1));
+        System.out.println(sl1.remove(2));
+        System.out.println(sl1.size());
+        sl1.clear();
+        System.out.println(sl1.size());
+
     }
 }
