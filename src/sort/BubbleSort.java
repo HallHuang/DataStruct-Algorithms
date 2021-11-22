@@ -19,7 +19,7 @@ public class BubbleSort {
     }
 
     public static void sort(Comparable[] a) {
-        //每次从开始(j=0)到已确定位置的最小的较大元素(j<i)进行排序
+        //从前往后进行相邻比较/交换，将最大值放在数组末尾
         for (int i = a.length - 1; i > 0; i--) {
             for (int j = 0; j < i; j++) {
                 if (greater(a[j], a[j + 1])) {
