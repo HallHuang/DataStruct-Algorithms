@@ -130,6 +130,5 @@ public class LinkList<T> {
         System.out.println(ll1);    //测试重写的toString()
         System.out.println(ll1.get(1));
         System.out.println(ll1.indexOf("hall"));
-
     }
 }
