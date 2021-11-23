@@ -55,7 +55,7 @@ public class TwoWayLinkList<T> implements Iterable<T> {
     public T get(int index) {
         if (index < N && index >= 0) {
             Node nextNode = head.next;
-            for (int i = 0; i < index; i++) {
+            for (int i = 1; i <= index; i++) {
                 nextNode = nextNode.next;
             }
             return nextNode.item;
@@ -154,6 +154,7 @@ public class TwoWayLinkList<T> implements Iterable<T> {
         return sb.toString().substring(0, sb.length() - 2);
     }
 
+    //利用快慢指针，或者直接get((N-1)/2)
     public T getMid() {
         Node fast = head.next;
         Node slow = head.next;
@@ -228,13 +229,14 @@ public class TwoWayLinkList<T> implements Iterable<T> {
         ll1.insert(3, "hall");
         ll1.insert("hwang");
         ll1.insert("hwangl");
-//        System.out.println(ll1);
-//        System.out.println(ll1.getMid());
-//        ll1.remove(2);
-//        System.out.println(ll1);
+        ll1.insert("jinan");
+        ll1.insert("shandong");
+        System.out.println(ll1);
+        System.out.println("index=4: " + ll1.get(4));
+        System.out.println("mid: " + ll1.getMid());
         ll1.reverse();
         System.out.println("---------reverse-----------");
         System.out.println(ll1);
-        System.out.println(ll1.getNode(3).pre.item);
+
     }
 }

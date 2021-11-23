@@ -1,5 +1,8 @@
-package linear;
+package test;
 
+/**
+ * 基于快慢指针的链表环的判断与入口的查询
+ */
 public class linkListAppliTest {
 
     private static class Node<T> {
@@ -12,19 +15,24 @@ public class linkListAppliTest {
         }
     }
 
+    //以first结点为期待呢，使用快慢指针判断是否有环
     private static boolean isCircle(Node<String> first) {
         Node<String> fast = first;
         Node<String> slow = first;
         while (fast != null && fast.next != null) {
             fast = fast.next.next;
             slow = slow.next;
-            if (fast.equals(slow)) {
+            if (fast.equals(slow)) {//如果移动中的快慢指针发生重合，则表示有环
                 return true;
             }
         }
         return false;
     }
 
+    /*
+     * 当快慢指针相遇时，我们可以判断到链表中有环，这时重新设定一个新指针指向链表的起点，
+     * 且步长与慢指针一样为1，则慢指针与“新”指针相遇的地方就是环的入口
+     */
     private static Node<String> getEntrance(Node<String> first) {
         Node<String> fast = first;
         Node<String> slow = first;

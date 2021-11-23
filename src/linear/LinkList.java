@@ -113,10 +113,10 @@ public class LinkList<T> {
         StringBuilder sb = new StringBuilder();
         Node node = head.next;
         for (int i = 0; i < N; i++) {
-            sb.append(node.item).append("\n");
+            sb.append(node.item).append(", ");
             node = node.next;
         }
-        return sb.toString();
+        return sb.toString().substring(0, sb.length() - 2);
     }
 
     public static void main(String[] args) {
