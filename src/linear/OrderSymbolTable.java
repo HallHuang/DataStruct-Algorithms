@@ -2,14 +2,83 @@ package linear;
 
 import java.util.Iterator;
 
+/**
+ * 有序符号表，按照键进行元素排序
+ *
+ * @param <Key>
+ * @param <Value>
+ */
 public class OrderSymbolTable<Key extends Comparable<Key>, Value> implements Iterable<Value> {
 
-    private Node head;
+    private final Node head;
     private int N;
 
     OrderSymbolTable() {
         this.head = new Node(null, null, null);
         this.N = 0;
+    }
+
+    public class Node {
+        private final Key key;
+        private Value value;
+        private Node next;
+
+        Node(Key key, Value value, Node next) {
+            this.key = key;
+            this.value = value;
+            this.next = next;
+        }
+    }
+
+    public int size() {
+        return N;
+    }
+
+    public void put(Key key, Value value) {
+        //键查重，若重则替换，否则添加
+        Node pre = head;
+        Node cur = head.next;
+
+        //查找合适位置
+        while (cur != null && cur.key.compareTo(key) < 0) {
+            pre = cur;
+            cur = cur.next;
+        }
+
+        //键重替换值
+        if (cur != null && cur.key.compareTo(key) == 0) {
+            cur.value = value;
+            return;
+        }
+
+        pre.next = new Node(key, value, cur);
+        N++;
+    }
+
+    public Value delete(Key key) {
+        //键查重，若重则删除，否则返回null
+        Node node = head;
+        while (node.next != null) {
+            if (node.next.key.equals(key)) {
+                Node nextNode = node.next;
+                node.next = nextNode.next;
+                N--;
+                return nextNode.value;
+            }
+            node = node.next;
+        }
+        return null;
+    }
+
+    public Value get(Key key) {
+        Node node = head;
+        while (node.next != null) {
+            node = node.next;
+            if (node.key.equals(key)) {
+                return node.value;
+            }
+        }
+        return null;
     }
 
     @Override
@@ -36,67 +105,6 @@ public class OrderSymbolTable<Key extends Comparable<Key>, Value> implements Ite
         }
     }
 
-    public class Node {
-        private Key key;
-        private Value value;
-        private Node next;
-
-        Node(Key key, Value value, Node next) {
-            this.key = key;
-            this.value = value;
-            this.next = next;
-        }
-    }
-
-    public int size() {
-        return N;
-    }
-
-    public void put(Key key, Value value) {
-        //键查重，若重则替换，否则添加
-        Node pre = head;
-        Node cur = head.next;
-        while (cur != null && cur.key.compareTo(key) >= 0) {
-            pre = cur;
-            cur = cur.next;
-        }
-
-        //cur != null是为了屏蔽初始化参数的下属方法执行
-        if (cur != null && cur.key.compareTo(key) == 0) {
-            cur.value = value;
-            return;
-        }
-
-        Node newNode = new Node(key, value, cur);
-        pre.next = newNode;
-        N++;
-    }
-
-    public Value delete(Key key) {
-        //键查重，若重则删除，否则返回null
-        Node node = head;
-        while (node.next != null) {
-            if (node.next.key.equals(key)) {
-                node.next = node.next.next;
-                N--;
-                return node.next.value;
-            }
-            node = node.next;
-        }
-        return null;
-    }
-
-    public Value get(Key key) {
-        Node node = head;
-        while (node.next != null) {
-            node = node.next;
-            if (node.key.equals(key)) {
-                return node.value;
-            }
-        }
-        return null;
-    }
-
     public static void main(String[] args) {
         OrderSymbolTable<Integer, String> st = new OrderSymbolTable();
         st.put(5, "obama");
@@ -105,8 +113,6 @@ public class OrderSymbolTable<Key extends Comparable<Key>, Value> implements Ite
         st.put(4, "jack");
         st.put(2, "canny");
         st.put(0, "jinan");
-
-
         for (String item : st) {
             System.out.println(item);
         }
@@ -127,8 +133,5 @@ public class OrderSymbolTable<Key extends Comparable<Key>, Value> implements Ite
         for (String item : st) {
             System.out.println(item);
         }
-
-
     }
-
 }

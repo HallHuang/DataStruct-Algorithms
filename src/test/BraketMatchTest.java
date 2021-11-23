@@ -1,18 +1,23 @@
-package linear;
+package test;
 
+import linear.Stack;
+
+/**
+ * 括号匹配以及内部字符串提取
+ */
 public class BraketMatchTest {
 
     public static void main(String[] args) {
-
         String matchedStr = "(中国(上海自由(贸易区)在浦江))";
         String[] matched = isMatched(matchedStr);
         System.out.println(matched[0]);
         System.out.println(matched[1]);
     }
 
+    //将左括号全部入栈，每遇到一个右括号弹栈进行判断
     private static String[] isMatched(String text) {
         boolean isMatched = true;
-        String[] result = new String[2];
+        String[] result = new String[2];    //存放是否匹配和匹配的字符串
         StringBuilder sb = new StringBuilder();
         Stack<String> stack = new Stack<>();
         Stack<Integer> stack1 = new Stack<>();
@@ -24,10 +29,8 @@ public class BraketMatchTest {
             } else if (str.equals(")")) {
                 String pop = stack.pop();
                 if (pop != null) {
-                    Integer popIndex = stack1.pop();
-                    if (null != popIndex) {
-                        sb.append(text.subSequence(popIndex + 1, i)).append(",");
-                    }
+                    Integer popIndex = stack1.pop();    //对应左括号的数组索引值
+                    sb.append(text.subSequence(popIndex + 1, i)).append(",");   //将这对括号内的字符串进行保存
                 } else {
                     isMatched = false;
                     break;
