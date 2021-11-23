@@ -2,9 +2,14 @@ package linear;
 
 import java.util.Iterator;
 
+/**
+ * 基于单向链表的栈的实现
+ * 辅助变量只有head:数据结点、N:元素个数
+ * 一端：首部入栈、首部出栈
+ */
 public class Stack<T> implements Iterable<T> {
 
-    private Node head;
+    private final Node head;
     private int N;
 
     public Stack() {
@@ -58,11 +63,8 @@ public class Stack<T> implements Iterable<T> {
     public void push(T t) {
         //当前首结点
         Node oldNode = head.next;
-        //包含新数据的新结点，并指向当前首结点
-        Node newNode = new Node(t, oldNode);
-        //head指向新结点
-        head.next = newNode;
-        //
+        //包含新数据的新结点，并指向当前首结点，head指向新结点
+        head.next = new Node(t, oldNode);
         N++;
     }
 
@@ -71,15 +73,13 @@ public class Stack<T> implements Iterable<T> {
         if (popNode == null) {
             return null;
         }
-        Node nextNode = popNode.next;
-        head.next = nextNode;
+        head.next = popNode.next;
         N--;
         return popNode.item;
     }
 
     public static void main(String[] args) {
         Stack<String> stack = new Stack<>();
-
         stack.push("abby");
         stack.push("bell");
         stack.push("dell");
@@ -87,11 +87,8 @@ public class Stack<T> implements Iterable<T> {
         stack.push("lorry");
         stack.push("green");
 
-        Iterator<String> iterator = stack.iterator();
-        while (iterator.hasNext()) {
-            System.out.println(iterator.next());
+        for (String s : stack) {
+            System.out.println(s);
         }
-
-
     }
 }
