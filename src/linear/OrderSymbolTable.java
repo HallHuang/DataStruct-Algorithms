@@ -50,6 +50,7 @@ public class OrderSymbolTable<Key extends Comparable<Key>, Value> implements Ite
             return;
         }
 
+        //新结点的前驱、后驱分别是pre、cur
         pre.next = new Node(key, value, cur);
         N++;
     }

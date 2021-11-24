@@ -3,7 +3,9 @@ package linear;
 import java.util.Iterator;
 
 /**
- * 符号表，基于单项链表、有序的数据结点类Node(key, value, next)
+ * 符号表，基于单项链表(有序的数据结点类Node(key, value, next))
+ * 一端插入、删除，先进后出
+ *
  * @param <Key>
  * @param <Value>
  */
@@ -36,10 +38,10 @@ public class SymbolTable<Key, Value> implements Iterable<Value> {
 
     public void put(Key key, Value value) {
         //键查重，若重则替换，否则添加
-        Node node = head;
-        while (node.next != null) {
-            if (node.next.key.equals(key)) {
-                node.next.value = value;
+        Node node = head.next;
+        while (node != null) {
+            if (node.key.equals(key)) {
+                node.value = value;
                 return;
             }
             node = node.next;

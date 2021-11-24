@@ -5,7 +5,8 @@ import java.util.Iterator;
 /**
  * 队列，基于单向列表实现
  * 辅助成员变量有head、last:数据结点、N:元素个数
- * 两端：尾部入列、首部出列
+ * 两端：尾部入列、首部出列，先进先出
+ *
  * @param <T>
  */
 public class Queue<T> implements Iterable<T> {

@@ -5,7 +5,7 @@ import java.util.Iterator;
 /**
  * 基于单向链表的栈的实现
  * 辅助变量只有head:数据结点、N:元素个数
- * 一端：首部入栈、首部出栈
+ * 一端：首部入栈、首部出栈，先进后出
  */
 public class Stack<T> implements Iterable<T> {
 
