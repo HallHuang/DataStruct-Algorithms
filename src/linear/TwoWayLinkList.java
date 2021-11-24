@@ -4,6 +4,8 @@ import java.util.Iterator;
 
 /**
  * 双向链表
+ * 数据结点（数据和前驱、后继）：Node(Node preNode, T item, Node nextNode)
+ *
  * @param <T>
  */
 public class TwoWayLinkList<T> implements Iterable<T> {
@@ -107,8 +109,6 @@ public class TwoWayLinkList<T> implements Iterable<T> {
             head.next = newNode;
             last = newNode;
             N++;
-        } else { // isEmpty() && index != 0
-            return;
         }
     }
 
@@ -151,7 +151,7 @@ public class TwoWayLinkList<T> implements Iterable<T> {
             node = node.next;
             sb.append(node.item.toString()).append(", ");
         } while (node.next != null);
-        return sb.toString().substring(0, sb.length() - 2);
+        return sb.substring(0, sb.length() - 2);
     }
 
     //利用快慢指针，或者直接get((N-1)/2)

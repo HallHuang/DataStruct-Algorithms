@@ -55,7 +55,7 @@ public class SequentialList<T> implements Iterable<T> {
 
     public void insert(int i, T t) {
 
-        if (i > N - 1) {//越界
+        if (i > N) {//没紧接尾元素的越界
             return;
         }
 
@@ -139,9 +139,8 @@ public class SequentialList<T> implements Iterable<T> {
         sl1.insert("Clinton");
         sl1.insert("Bush");
 
-        Iterator<String> iterator = sl1.iterator();
-        while (iterator.hasNext()) {
-            System.out.println(iterator.next());
+        for (String s : sl1) {
+            System.out.println(s);
         }
 
         System.out.println("index of Bill: " + sl1.indexOf("Bill"));
