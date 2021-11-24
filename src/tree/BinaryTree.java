@@ -2,6 +2,13 @@ package tree;
 
 import linear.Queue;
 
+/**
+ * 保存键值对数据的二叉树
+ * 辅助成员变量：根结点：root，数据结点个数： N
+ * Node(Key key, Value value, Node left, Node right)
+ * @param <Key>
+ * @param <Value>
+ */
 public class BinaryTree<Key extends Comparable<Key>, Value> {
 
     private Node root;
@@ -31,7 +38,6 @@ public class BinaryTree<Key extends Comparable<Key>, Value> {
     }
 
     public Node put(Node x, Key key, Value value) {
-
         //触底时的初始化, 当x.left/right = null时
         if (x == null) {
             N++;
@@ -100,7 +106,6 @@ public class BinaryTree<Key extends Comparable<Key>, Value> {
                 minNode = minNode.left;
             }
 
-
             //删除minNode
             Node node = x.right;
             Node preNode = node;
@@ -117,7 +122,6 @@ public class BinaryTree<Key extends Comparable<Key>, Value> {
                 preNode.left = minNode.right;
             }
 
-
             //x ==> minNode
             minNode.left = x.left;
             minNode.right = x.right;
@@ -126,7 +130,6 @@ public class BinaryTree<Key extends Comparable<Key>, Value> {
             }
             x = minNode;
         }
-
         return x;   // x_father.left/right = x;
     }
 
