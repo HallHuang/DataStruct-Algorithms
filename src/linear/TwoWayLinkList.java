@@ -5,7 +5,6 @@ import java.util.Iterator;
 /**
  * 双向链表
  * 数据结点(数据和前驱、后继)：Node(Node preNode, T item, Node nextNode)
- *
  * @param <T>
  */
 public class TwoWayLinkList<T> implements Iterable<T> {

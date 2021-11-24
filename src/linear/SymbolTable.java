@@ -6,7 +6,6 @@ import java.util.Iterator;
  * 符号表，基于单项链表
  * 数据结点类Node(key, value, next))
  * 一端插入、删除，先进后出
- *
  * @param <Key>
  * @param <Value>
  */

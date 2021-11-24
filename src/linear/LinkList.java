@@ -3,7 +3,6 @@ package linear;
 /**
  * 单向链表
  * 数据结点（数据和后继结点）:Node(T item, Node next)
- *
  * @param <T>
  */
 public class LinkList<T> {
