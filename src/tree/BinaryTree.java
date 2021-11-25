@@ -3,9 +3,10 @@ package tree;
 import linear.Queue;
 
 /**
- * 保存键值对数据的二叉树
+ * 保存键值对数据的二叉树(每个结点最多有两个子结点)
  * 辅助成员变量：根结点：root，数据结点个数： N
  * Node(Key key, Value value, Node left, Node right)
+ *
  * @param <Key>
  * @param <Value>
  */
@@ -20,7 +21,7 @@ public class BinaryTree<Key extends Comparable<Key>, Value> {
     }
 
     private class Node {
-        private Key key;
+        private final Key key;
         private Value value;
         private Node left;
         private Node right;
@@ -38,13 +39,13 @@ public class BinaryTree<Key extends Comparable<Key>, Value> {
     }
 
     public Node put(Node x, Key key, Value value) {
-        //触底时的初始化, 当x.left/right = null时
+        //当x.left/right = null触底时才新建结点
         if (x == null) {
             N++;
             return new Node(key, value, null, null);
         }
 
-        int cmp = key.compareTo(x.key);     //key-x.key
+        int cmp = key.compareTo(x.key);     //key - x.key
         if (cmp > 0) {
             //若x.right为空，则创建包含参数数据的新的结点；否则，仅需进行递归迭代直到创建新结点
             x.right = put(x.right, key, value); //更新右分支树，直到新建结点填充某个结点x的左/右结点
@@ -62,7 +63,7 @@ public class BinaryTree<Key extends Comparable<Key>, Value> {
 
     public Value get(Node x, Key key) {
 
-        if (x == null) {
+        if (x == null) {//到达叶结点仍无该key,则返回null
             return null;
         }
 
@@ -90,42 +91,38 @@ public class BinaryTree<Key extends Comparable<Key>, Value> {
             x.right = delete(x.right, key);  //右树更新,等待下层更新完成
         } else if (cmp < 0) {
             x.left = delete(x.left, key);    //左树更新,等待下层更新完成
-        } else {
+        } else {//找到该key对应结点
             N--;
+
+            //x只有单子树时，直接返回该子树即可实现删除x结点
             if (x.left == null) {
                 return x.right;     //删除+重指向
             }
-
             if (x.right == null) {
                 return x.left;      //删除+重指向
             }
 
-            //查询右支键最小对应的结点minNode
+            //x存在双子结点时(可能有多层子树)，查询右支中键最小对应的结点minNode
+            Node preNode = x;
             Node minNode = x.right;
             while (minNode.left != null) {
+                preNode = minNode;
                 minNode = minNode.left;
             }
 
-            //删除minNode
-            Node node = x.right;
-            Node preNode = node;
-            while (node.left != null) {
-                if (node.left.left == null) {//叶结点:（）--（）
-                    node.left = null;  //minNode现位置置空
-                } else {
-                    preNode = node;
-                    node = node.left;
-                }
-            }
-            //minNode存在右结点，则该右结点替代minNode位置
+            //minNode存在右结点，则该右结点替代minNode位置,否则直接删除minNode
             if (minNode.right != null) {
-                preNode.left = minNode.right;
+                preNode.right = minNode.right;
+            } else {
+                preNode.right = null;
             }
 
             //x ==> minNode
             minNode.left = x.left;
             minNode.right = x.right;
-            if (x.equals(root)) {//如果删除的是根结点，则必须重设root,否则root空指针
+
+            //如果删除的是根结点，则必须重设root,否则root空指针
+            if (x.equals(root)) {
                 root = minNode;
             }
             x = minNode;
@@ -260,19 +257,19 @@ public class BinaryTree<Key extends Comparable<Key>, Value> {
             return 0;
         }
 
-        int max = 0;
+        int max;
         int maxL = 0;
         int maxR = 0;
 
         if (x.left != null) {
-            maxL = maxDepth(x.left);
+            maxL = maxDepth(x.left);    //左子树的深度
         }
 
         if (x.right != null) {
-            maxR = maxDepth(x.right);
+            maxR = maxDepth(x.right);   //右子树的深度
         }
 
-        max = maxL > maxR ? maxL + 1 : maxR + 1;
+        max = maxL > maxR ? maxL + 1 : maxR + 1;  //取最大
 
         return max;
     }
@@ -286,42 +283,25 @@ public class BinaryTree<Key extends Comparable<Key>, Value> {
         bt.put(34, "34");
         bt.put(28, "28");
         bt.put(33, "33");
+        bt.put(15, "15");
+        bt.put(27, "27");
 
         System.out.println("SIZE: " + bt.size());
-        System.out.println(bt.get(28));
-        System.out.println(bt.get(20));
-        System.out.println(bt.get(33));
 
-        System.out.println("---------------------");
-        bt.delete(12);
-        System.out.println("SIZE: " + bt.size());
-        System.out.println("after delete: " + bt.get(12));
-        bt.delete(20);
-        System.out.println("SIZE: " + bt.size());
-        System.out.println("after delete: " + bt.get(20));
-        System.out.println("minkey:" + bt.minKey());
-        System.out.println("maxkey:" + bt.maxKey());
-
-        System.out.println("---------前序遍历------------");
-        Queue<Integer> keys = bt.preErgodic();
-        for (Integer item : keys) {
-            System.out.println(item);
-        }
-
-        System.out.println("---------中序遍历------------");
-        Queue<Integer> keys1 = bt.midErgodic();
+        System.out.println("---------层序遍历1------------");
+        Queue<Integer> keys1 = bt.layerErgodic();
         for (Integer item : keys1) {
             System.out.println(item);
         }
 
-        System.out.println("---------层序遍历------------");
+        System.out.println("------------delete 12---------");
+        bt.delete(12);
+        System.out.println("SIZE: " + bt.size());
+
+        System.out.println("---------删除一结点12后 层序遍历------------");
         Queue<Integer> keys2 = bt.layerErgodic();
         for (Integer item : keys2) {
             System.out.println(item);
         }
-
-        bt.put(5, "5");
-        System.out.println("深度：" + bt.maxDepth());
-
     }
 }
