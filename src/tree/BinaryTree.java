@@ -109,11 +109,12 @@ public class BinaryTree<Key extends Comparable<Key>, Value> {
                 minNode = minNode.left;
             }
 
-            //minNode存在右结点，则该右结点替代minNode位置,否则直接删除minNode
-            if (minNode.right != null) {
+            //如果x右子树深度仅为1则取x.right = minNode右子树, 否则 preNode.left = minNode.right;
+            if (preNode.key.equals(x.key)) {
                 preNode.right = minNode.right;
             } else {
-                preNode.right = null;
+                //minNode存在右结点，则该右结点替代minNode位置,否则直接删除minNode
+                preNode.left = minNode.right;  // minNode.right分为 null 和 nonNull两种情况
             }
 
             //x ==> minNode
