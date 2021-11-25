@@ -109,7 +109,7 @@ public class BinaryTree<Key extends Comparable<Key>, Value> {
                 minNode = minNode.left;
             }
 
-            //如果x右子树深度仅为1则取x.right = preNode.left = minNode右子树,
+            //如果x右子树深度仅为1则取x.right = preNode.right = minNode右子树,
             // 否则 preNode.left = minNode.right;
             if (preNode.key.equals(x.key)) {
                 preNode.right = minNode.right;
