@@ -1,8 +1,14 @@
 package tree;
 
+/**
+ * 堆：一颗完全二叉树的数组对象
+ * 父结点的值不小于子结点的值，索引1处的值最大（但是最大值可能不唯一）
+ *
+ * @param <T>
+ */
 public class Heap<T extends Comparable<T>> {
 
-    private T[] items;
+    private final T[] items;
     private int N;
 
     public Heap(int capacity) {
@@ -20,12 +26,14 @@ public class Heap<T extends Comparable<T>> {
         items[j] = tmp;
     }
 
+    //树的层序式数据插入
     public void insert(T t) {
         items[++N] = t;
         swim(N);
     }
 
     private void swim(int k) {
+        //只考虑非根结点
         while (k > 1) {
             //如果父结点的值小于插入值，则进行交换，直到树中全部结点的父结点的值都大于子结点
             if (less(k / 2, k)) {
@@ -37,6 +45,7 @@ public class Heap<T extends Comparable<T>> {
 
     public T delMax() {
         T max = items[1];
+        //将堆数组中的最后一个元素和首元素进行交换来补空，之后对新首元素进行下沉操作
         exch(1, N);
         items[N] = null;
         N--;
@@ -45,18 +54,13 @@ public class Heap<T extends Comparable<T>> {
     }
 
     private void sink(int k) {
-        //循环中止条件是到达叶子结点（其索引二倍值一定大于N）
-        while (2 * k <= N) {//分枝结点的子结点值判断
+        //只考虑非叶结点，找到根结点子树下的值最大对应的索引值，然后进行交换
+        while (k <= N / 2) {
             int max;
 
             //存在右结点
-            if (2 * k + 1 <= N) {
-                //取两结点的值最大结点
-                if (less(2 * k, 2 * k + 1)) {
-                    max = 2 * k + 1;
-                } else {
-                    max = 2 * k;
-                }
+            if (2 * k + 1 <= N) {//子结点索引值小于N即表示存在该子结点
+                max = less(2 * k, 2 * k + 1) ? 2 * k + 1 : 2 * k;
             } else {
                 max = 2 * k;
             }
@@ -82,7 +86,7 @@ public class Heap<T extends Comparable<T>> {
         hp.insert("hall");
         hp.insert("internal");
 
-        String result = null;
+        String result;
         while ((result = hp.delMax()) != null) {
             System.out.println(result);
         }
