@@ -109,10 +109,10 @@ public class BinaryTree<Key extends Comparable<Key>, Value> {
                 minNode = minNode.left;
             }
 
-            //如果x右子树深度仅为1则取x.right = preNode.right = minNode右子树,
-            // 否则 preNode.left = minNode.right;
+            //如果x.right没有左子树， preNode.right = minNode.right;
+            //否则 preNode.left = minNode.right;
             if (preNode.key.equals(x.key)) {
-                preNode.right = minNode.right;
+                preNode.right = minNode.right;  // minNode.right分为 null 和 nonNull两种情况
             } else {
                 //minNode存在右结点，则该右结点替代minNode位置,否则直接删除minNode
                 preNode.left = minNode.right;  // minNode.right分为 null 和 nonNull两种情况
@@ -163,21 +163,17 @@ public class BinaryTree<Key extends Comparable<Key>, Value> {
         return keys;
     }
 
+    //对结点x的子树进行前序遍历
     public void preErgodic(Node x, Queue<Key> keys) {
 
-        if (x == null) {
-            return;
-        }
-
-        //x.key ==> keys
         keys.enqueue(x.key);
 
-        //x.left.{key} ==> keys
+        //先对左子树进行前序遍历
         if (x.left != null) {
             preErgodic(x.left, keys);
         }
 
-        //x.right.{key} ==> keys
+        //后对右子树进行前序遍历
         if (x.right != null) {
             preErgodic(x.right, keys);
         }
@@ -191,15 +187,12 @@ public class BinaryTree<Key extends Comparable<Key>, Value> {
 
     public void midErgodic(Node x, Queue<Key> keys) {
 
-        if (x == null) {
-            return;
-        }
-
-        //先递归，左子树的键放入对列中
         if (x.left != null) {
             midErgodic(x.left, keys);
         }
+
         keys.enqueue(x.key);
+
         if (x.right != null) {
             midErgodic(x.right, keys);
         }
@@ -213,7 +206,6 @@ public class BinaryTree<Key extends Comparable<Key>, Value> {
 
     public void afterErgodic(Node x, Queue<Key> keys) {
 
-        //先递归，左子树的键放入对列中
         if (x.left != null) {
             afterErgodic(x.left, keys);
         }
@@ -230,7 +222,6 @@ public class BinaryTree<Key extends Comparable<Key>, Value> {
 
         Queue<Node> nodes = new Queue<>();
         Queue<Key> keys = new Queue<>();
-
         nodes.enqueue(root);    //根结点入列
 
         //对结点队列进行遍历，出元与入元同时进行
@@ -252,13 +243,6 @@ public class BinaryTree<Key extends Comparable<Key>, Value> {
     }
 
     public int maxDepth(Node x) {
-
-        //递归终点
-        if (x == null) {
-            return 0;
-        }
-
-        int max;
         int maxL = 0;
         int maxR = 0;
 
@@ -270,9 +254,7 @@ public class BinaryTree<Key extends Comparable<Key>, Value> {
             maxR = maxDepth(x.right);   //右子树的深度
         }
 
-        max = maxL > maxR ? maxL + 1 : maxR + 1;  //取最大
-
-        return max;
+        return maxL > maxR ? maxL + 1 : maxR + 1;  //取最大
     }
 
     public static void main(String[] args) {
@@ -286,12 +268,21 @@ public class BinaryTree<Key extends Comparable<Key>, Value> {
         bt.put(33, "33");
         bt.put(15, "15");
         bt.put(27, "27");
+        bt.put(4, "4");
 
         System.out.println("SIZE: " + bt.size());
 
-        System.out.println("---------层序遍历1------------");
+        System.out.println("---------层序遍历------------");
         Queue<Integer> keys1 = bt.layerErgodic();
         for (Integer item : keys1) {
+            System.out.println(item);
+        }
+
+        System.out.println("depth:" + bt.maxDepth());
+
+        System.out.println("---------前序遍历------------");
+        Queue<Integer> keys3 = bt.preErgodic();
+        for (Integer item : keys3) {
             System.out.println(item);
         }
 
