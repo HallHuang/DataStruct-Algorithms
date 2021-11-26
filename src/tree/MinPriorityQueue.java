@@ -1,5 +1,12 @@
 package tree;
 
+import java.util.Iterator;
+
+/**
+ * 最小优先队列
+ * 该种堆的父结点的值不大于子结点的值
+ * @param <T>
+ */
 public class MinPriorityQueue<T extends Comparable<T>> {
     //存储堆中的元素
     private T[] items;
@@ -44,8 +51,7 @@ public class MinPriorityQueue<T extends Comparable<T>> {
         T min = items[1];
         exch(1, N);
         items[N] = null;
-        N--;
-        sink(1);
+        sink(1, --N);
         return min;
     }
 
@@ -60,20 +66,15 @@ public class MinPriorityQueue<T extends Comparable<T>> {
         }
     }
 
-    //使用下沉算法，使索引k处的元素能在堆中处于一个正确的位置
-    private void sink(int k) {
-        //通过循环比较当前分支结点和其子结点中的较小值
-        while (2 * k <= N) {
+    //在1~range范围内进行下沉
+    private void sink(int k, int range) {
+        while (k <= range / 2) {
             //1.找到子结点中的较小值的索引
             int min;
 
             //考虑全部右子结点和没有右子结点两种情况
-            if (2 * k + 1 <= N) {
-                if (less(2 * k, 2 * k + 1)) {
-                    min = 2 * k;
-                } else {
-                    min = 2 * k + 1;
-                }
+            if (2 * k + 1 <= range) {
+                min = less(2 * k, 2 * k + 1) ? 2 * k : 2 * k + 1;
             } else {//最后一个分枝结点没有右子结点
                 min = 2 * k;
             }
@@ -87,4 +88,22 @@ public class MinPriorityQueue<T extends Comparable<T>> {
         }
     }
 
+    public static void main(String[] args) {
+        MinPriorityQueue<String> queue = new MinPriorityQueue<>(8);
+        queue.insert("vivi");
+        queue.insert("xuxux");
+        queue.insert("jelly");
+        queue.insert("android");
+        queue.insert("oreo");
+        queue.insert("kafu");
+        queue.insert("elly");
+        queue.insert("yield");
+
+        System.out.println("--------使用delMin遍历-----------");
+        String result;
+        while ((result = queue.delMin()) != null) {
+            System.out.println(result);
+        }
+
+    }
 }

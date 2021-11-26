@@ -1,17 +1,18 @@
 package tree;
 
+/**
+ * 索引最小优先队列
+ * @param <T>
+ */
 public class IndexMinPriorityQueue<T extends Comparable<T>> {
-    private final T[] items;  //添加数据数组
+    private final T[] items;  //数据数组，在关联索引值下存放相应元素
     private final int[] pq;   //关联索引数组，pq[堆索引] = 关联索引
     private final int[] qp;   //堆索引数组，qp[关联索引] = 堆索引
     private int N;
 
     public IndexMinPriorityQueue(int capacity) {
-        //原始待处理数组
         this.items = (T[]) new Comparable[capacity + 1];
-        //原始数组转化成堆后，从小到大各项值的关联索引组成的数组
         this.pq = new int[capacity + 1];
-        //原始待处理数组各项在堆中的索引值所组成的数组
         this.qp = new int[capacity + 1];
         this.N = 0;
 
@@ -33,14 +34,13 @@ public class IndexMinPriorityQueue<T extends Comparable<T>> {
         return items[pq[i]].compareTo(items[pq[j]]) < 0;
     }
 
-    private void exch(int i, int j) {
+    private void exch(int i, int j) {//i,j是堆索引
         //交换关联索引值
         int tmp = pq[i];
         pq[i] = pq[j];
         pq[j] = tmp;
 
-        //qp[i]默认所有元素起始值都是-1, qp[原始索引值] = 堆索引值， pq[堆索引值] = 原始索引值，
-        //qp[pq[堆索引值]] = 堆索引值 != -1
+        //堆树中的两个数据发生交换，但是关联索引不会改变，
         qp[pq[i]] = i;
         qp[pq[j]] = j;
     }
@@ -55,18 +55,16 @@ public class IndexMinPriorityQueue<T extends Comparable<T>> {
         return pq[1];
     }
 
-    //在原始items数组中i位置插入一个元素t
+    //元素绑定关联索引i，插入到堆数组中
     public void insert(int i, T t) {
         if (contains(i)) {
             return;
         }
         //长度自增1
         N++;
-        //items[i]=t
         items[i] = t;
         //将新添加元素放在堆的最后,其堆索引号为N，之后在进行上浮操作
         pq[N] = i;
-        //qp
         qp[i] = N;
         //对新添加在堆末尾的元素进行上浮调整
         swim(N);
@@ -85,13 +83,9 @@ public class IndexMinPriorityQueue<T extends Comparable<T>> {
 
     private void sink(int k) {
         int min = 0;
-        while (2 * k <= N) {
+        while (k <= N / 2) {
             if (2 * k + 1 <= N) {
-                if (less(2 * k, 2 * k + 1)) {
-                    min = 2 * k;
-                } else {
-                    min = 2 * k + 1;
-                }
+                min = less(2 * k, 2 * k + 1) ? 2 * k : 2 * k + 1;
             } else {
                 min = 2 * k;
             }
@@ -112,11 +106,10 @@ public class IndexMinPriorityQueue<T extends Comparable<T>> {
         sink(1);
         qp[minIndex] = -1;
         items[minIndex] = null;
-        //pq[N+1] = -1;
         return minIndex;
     }
 
-    //
+    //删除关联索引i处的数据
     public void delete(int i) {
         int k = qp[i];  //关联索引--》堆索引
         System.out.println("K=" + k);
@@ -128,6 +121,7 @@ public class IndexMinPriorityQueue<T extends Comparable<T>> {
         qp[i] = -1;
     }
 
+    //改变关联索引i处的数据
     public void changeItem(int i, T t) {
         items[i] = t;
         int k = qp[i];
@@ -144,12 +138,8 @@ public class IndexMinPriorityQueue<T extends Comparable<T>> {
         impq.insert(4, "lorry");
         impq.insert(5, "abby");
         impq.insert(6, "salary");
-
-
         impq.delete(1);
-
         System.out.println("----------------------");
-
         impq.delete(4);
         while (!impq.isEmpty()) {
             System.out.println(impq.delMin());
@@ -157,6 +147,4 @@ public class IndexMinPriorityQueue<T extends Comparable<T>> {
         System.out.println("----------------------");
 
     }
-
-
 }

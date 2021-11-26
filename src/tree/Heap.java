@@ -2,7 +2,8 @@ package tree;
 
 /**
  * 堆：一颗完全二叉树的数组对象
- * 父结点的值不小于子结点的值，索引1处的值最大（但是最大值可能不唯一）
+ * 父结点的值不小于或不大于子结点的值，索引1处的值最大或最小（但是最大值可能不唯一）
+ * 本代码实现的是最大堆（最大优先队列MaxPriorityQueue）
  * @param <T>
  */
 public class Heap<T extends Comparable<T>> {
