@@ -6,7 +6,7 @@ import java.util.Arrays;
 
 /**
  * 使用堆构造原理进行一般数组的值排序（不直接使用功能类Heap-delMax()）
- * 从小到达的进行数组的堆全排序，包括兄弟结点
+ * 每次将最大值置尾，最终实现从小到大
  * 堆排序的时间复杂度：O(n*log(n))
  */
 public class HeapSort {
