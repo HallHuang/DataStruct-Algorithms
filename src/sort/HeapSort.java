@@ -1,4 +1,6 @@
-package tree;
+package sort;
+
+import tree.Heap;
 
 import java.util.Arrays;
 
@@ -42,7 +44,7 @@ public class HeapSort {
         System.arraycopy(heap, 1, source, 0, source.length);
     }
 
-    //是所有父结点的值均不小于子结点的值
+    //使所有父结点的值均不小于子结点的值
     private static void sink(Comparable[] heap, int target, int range) {
         //所有非叶子结点
         while ( target <= range / 2) {
