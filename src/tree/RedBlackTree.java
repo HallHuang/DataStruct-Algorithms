@@ -1,5 +1,10 @@
 package tree;
 
+/**
+ * 红黑树
+ * @param <Key>
+ * @param <Value>
+ */
 public class RedBlackTree<Key extends Comparable<Key>, Value> {
     private Node root;
     private int N;
@@ -7,7 +12,7 @@ public class RedBlackTree<Key extends Comparable<Key>, Value> {
     public static final boolean BLACK = false;
 
     private class Node {
-        private Key key;
+        private final Key key;
         private Value value;
         private Node left;
         private Node right;
@@ -33,7 +38,7 @@ public class RedBlackTree<Key extends Comparable<Key>, Value> {
         return x.color == RED;
     }
 
-    //结点x的右结点是红色结点时
+    //结点h的右结点是红色结点时
     //第2、3两步的执行顺序不能颠倒
     private Node rotateLeft(Node h) {
         Node x = h.right;
@@ -63,7 +68,7 @@ public class RedBlackTree<Key extends Comparable<Key>, Value> {
 
     public void put(Key key, Value val) {
         root = put(root, key, val);
-        root.color = BLACK;
+        root.color = BLACK; //根结点颜色是黑色的
     }
 
     //在树x上完成数据插入操作，并返回添加元素后的新树
@@ -71,7 +76,7 @@ public class RedBlackTree<Key extends Comparable<Key>, Value> {
 
         if (x == null) {
             N++;
-            return new Node(key, val, null, null, RED);
+            return new Node(key, val, null, null, RED); //插入的新结点的颜色是红色的
         }
 
         int cmp = key.compareTo(x.key);

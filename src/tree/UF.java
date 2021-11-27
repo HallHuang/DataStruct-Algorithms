@@ -1,15 +1,16 @@
 package tree;
 
+import java.util.Arrays;
 import java.util.Scanner;
 
+/**
+ * 并查集
+ */
 public class UF {
 
-    //分组标识号数组 或者 索引代表的结点的父结点标识编号
-    private int[] eleAndGroup;
-    private int count;
-
-    //UF_TREE_Weighted,每个根结点下子结点总数
-    private int[] sz;
+    private final int[] eleAndGroup;  //分组标识号数组 或者 索引代表的结点的父结点标识数组
+    private int count;  //分组树，默认为元素个数
+    private final int[] sz;   //UF_TREE_Weighted,每个根结点下子结点总数
 
     public UF(int N) {
         this.count = N;
@@ -19,15 +20,14 @@ public class UF {
         }
 
         this.sz = new int[N];
-        for (int i = 0; i < sz.length; i++) {
-            sz[i] = 1;
-        }
+        Arrays.fill(sz, 1);
     }
 
     public int count() {
         return count;
     }
 
+    //获取索引值p下的分组标识号或者后继结点
     public int find(int p) {
         //return eleAndGroup[p];
 
@@ -40,6 +40,7 @@ public class UF {
         }
     }
 
+    //判断两结点是否在同一组
     public boolean connected(int p, int q) {
         return find(p) == find(q);
     }
@@ -52,7 +53,7 @@ public class UF {
 //        int pGroup = find(p);
 //        int qGroup = find(q);
 //        for (int i = 0; i < eleAndGroup.length; i++) {
-//            if (find(i) == pGroup){
+//            if (find(i) == pGroup){//遍历以使分组号相同
 //                eleAndGroup[i] = qGroup;
 //            }
 //        }
@@ -84,7 +85,7 @@ public class UF {
 
         Scanner sc = new Scanner(System.in);
 
-        while (true) {
+        do {
             System.out.println("请输入第一个要合并的元素：");
             int p = sc.nextInt();
             System.out.println("请输入第二个要合并的元素：");
@@ -98,8 +99,6 @@ public class UF {
 
             uf.union(p, q);
             System.out.println("当前并查集中还有：" + uf.count() + "个分组");
-        }
+        } while (true);
     }
-
-
 }

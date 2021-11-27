@@ -1,11 +1,13 @@
 package tree;
 
+import java.util.Arrays;
+
 /**
  * 索引最小优先队列
  * @param <T>
  */
 public class IndexMinPriorityQueue<T extends Comparable<T>> {
-    private final T[] items;  //数据数组，在关联索引值下存放相应元素
+    private final T[] items;  //数据数组，items[关联索引] = 数据元素
     private final int[] pq;   //关联索引数组，pq[堆索引] = 关联索引
     private final int[] qp;   //堆索引数组，qp[关联索引] = 堆索引
     private int N;
@@ -16,9 +18,7 @@ public class IndexMinPriorityQueue<T extends Comparable<T>> {
         this.qp = new int[capacity + 1];
         this.N = 0;
 
-        for (int i = 0; i < qp.length; i++) {
-            qp[i] = -1;
-        }
+        Arrays.fill(qp, -1);
     }
 
     public int size() {
@@ -29,7 +29,7 @@ public class IndexMinPriorityQueue<T extends Comparable<T>> {
         return N == 0;
     }
 
-    //用于插入/删除元素后，原最小堆的重新调整
+    //通过堆索引间接进行数据值比较
     private boolean less(int i, int j) {
         return items[pq[i]].compareTo(items[pq[j]]) < 0;
     }
@@ -50,7 +50,7 @@ public class IndexMinPriorityQueue<T extends Comparable<T>> {
         return qp[k] != -1;
     }
 
-    //最小值对应的关联索引值
+    //数据最小值对应的关联索引值
     public int minIndex() {
         return pq[1];
     }
@@ -64,8 +64,8 @@ public class IndexMinPriorityQueue<T extends Comparable<T>> {
         N++;
         items[i] = t;
         //将新添加元素放在堆的最后,其堆索引号为N，之后在进行上浮操作
-        pq[N] = i;
         qp[i] = N;
+        pq[N] = i;
         //对新添加在堆末尾的元素进行上浮调整
         swim(N);
     }
@@ -73,7 +73,7 @@ public class IndexMinPriorityQueue<T extends Comparable<T>> {
     private void swim(int k) {
         while (k > 1) {
             if (less(k, k / 2)) {
-                exch(k, k / 2);
+                exch(k, k / 2); //pq,qp数组的元素调整
             } else {
                 break;
             }
@@ -82,7 +82,7 @@ public class IndexMinPriorityQueue<T extends Comparable<T>> {
     }
 
     private void sink(int k) {
-        int min = 0;
+        int min;
         while (k <= N / 2) {
             if (2 * k + 1 <= N) {
                 min = less(2 * k, 2 * k + 1) ? 2 * k : 2 * k + 1;
@@ -104,8 +104,8 @@ public class IndexMinPriorityQueue<T extends Comparable<T>> {
         int minIndex = pq[1];
         exch(1, N--);
         sink(1);
-        qp[minIndex] = -1;
-        items[minIndex] = null;
+        qp[minIndex] = -1;  //删除后qp[删除元素的关联索引]为-1
+        items[minIndex] = null; ////删除后关联索引下的原始数据置空
         return minIndex;
     }
 
