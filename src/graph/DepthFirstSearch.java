@@ -1,19 +1,29 @@
 package graph;
 
-public class DepthFirstSearch {
-    private final boolean[] marked;
-    private int count;
+import linear.Queue;
 
+/**
+ * 深度优先搜索
+ *
+ */
+public class DepthFirstSearch {
+    private final boolean[] marked; //各顶点已被搜索过的标记数组
+    private int count;  //与起点s相同的顶点数
+    private Queue<Integer> queue;
+
+    //构造器设置顶点s为起点并进行搜索
     public DepthFirstSearch(Graph G, int s) {
         this.marked = new boolean[G.V()];
         this.count = 0;
+        queue = new Queue<>();
         dfs(G, s);
     }
 
     //深度优先搜索全部互通结点
     private void dfs(Graph G, int v) {
         marked[v] = true;
-        for (Integer w : G.adj(v)) {
+        queue.enqueue(v);
+        for (Integer w : G.adj(v)) {//对相邻顶点进行遍历处理
             if (!marked(w)) {
                 dfs(G, w);  //逐层向前递归搜索触底，结束节点是全部相通结点都已被标记为true,此时开始逐层向后执行
                 System.out.println("w = " + w);
@@ -21,6 +31,11 @@ public class DepthFirstSearch {
         }
         count++;
         System.out.println("count = " + count);
+    }
+
+    //返回搜索路径上各顶点
+    public Queue<Integer> queue() {
+        return queue;
     }
 
     public boolean marked(int w) {
@@ -33,8 +48,8 @@ public class DepthFirstSearch {
 
     public static void main(String[] args) {
         Graph G = new Graph(12);
-        G.addEdge(0, 1);
         G.addEdge(0, 4);
+        G.addEdge(0, 1);
         G.addEdge(1, 2);
         G.addEdge(2, 3);
         G.addEdge(2, 5);
@@ -50,6 +65,12 @@ public class DepthFirstSearch {
         System.out.println(search.count());
         System.out.println(search.marked(6));
         System.out.println(search.marked(5));
+        System.out.println("-----------------");
+        Queue<Integer> queue = search.queue();
+        for (Integer integer : queue) {
+            System.out.print(integer + " ");
+        }
+        System.out.println("");
 
         Graph graphRoad = new Graph(20);
         graphRoad.addEdge(0, 1);

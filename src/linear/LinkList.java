@@ -94,6 +94,7 @@ public class LinkList<T> {
 
         //preNode指向nextNode
         preNode.next = nextNode;
+        curNode.next = null;
         N--;
         return curNode.item;
     }
@@ -117,7 +118,26 @@ public class LinkList<T> {
             sb.append(node.item).append(", ");
             node = node.next;
         }
-        return sb.toString().substring(0, sb.length() - 2);
+        return sb.substring(0, sb.length() - 2);
+    }
+
+    public void reverse() {
+        if (isEmpty() || length() == 1) {
+            return;
+        }
+
+        reverse(head.next);
+    }
+
+    private Node reverse(Node curNode) {
+        if (curNode.next == null) {
+            head.next = curNode;
+            return curNode;
+        }
+        Node node = reverse(curNode.next);
+        curNode.next = null;
+        node.next = curNode;
+        return curNode;
     }
 
     public static void main(String[] args) {
@@ -131,5 +151,9 @@ public class LinkList<T> {
         System.out.println(ll1);    //测试重写的toString()
         System.out.println(ll1.get(1));
         System.out.println(ll1.indexOf("hall"));
+
+        ll1.reverse();
+        System.out.println("___________reverse______________");
+        System.out.println(ll1);
     }
 }

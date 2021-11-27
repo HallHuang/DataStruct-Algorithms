@@ -2,6 +2,10 @@ package graph;
 
 import linear.Queue;
 
+/**
+ * 无向图
+ * 队列数组adj：索引值代表顶点，数组元素adj[i]保存对应顶点的相邻顶点
+ */
 public class Graph {
 
     private final int V;    //顶点数
@@ -26,7 +30,7 @@ public class Graph {
     }
 
     public void addEdge(int v, int w) {
-        //相互入列
+        //相互入列，两个顶点可添加多条平行边
         adj[v].enqueue(w);
         adj[w].enqueue(v);
         E++;
@@ -34,9 +38,5 @@ public class Graph {
 
     public Queue<Integer> adj(int v) {
         return adj[v];
-    }
-
-    public static void main(String[] args) {
-
     }
 }

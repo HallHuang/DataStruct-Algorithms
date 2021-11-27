@@ -2,10 +2,14 @@ package graph;
 
 import linear.Queue;
 
+/**
+ * 有向图
+ * 队列数组adj：索引值代表顶点，数组元素adj[i]保存对应顶点指向的的相邻顶点
+ */
 public class Digraph {
     private final int V;    //顶点数
     private int E;  //有向边数
-    private Queue<Integer>[] adj;   //各顶点(0,1,2,...,V-1)的相邻顶点（指向相邻顶点）组成的队列所组成的数组
+    private Queue<Integer>[] adj;   //各顶点(0,1,2,...,V-1)的相邻顶点（指向的相邻顶点）组成的队列所组成的数组
 
     public Digraph(int V) {
         this.V = V;
@@ -57,12 +61,9 @@ public class Digraph {
         for (Integer v : dg.adj(3)) {
             System.out.print(v + ", ");
         }
-
         System.out.println();
-        
         for (Integer v : dg.adj(2)) {
             System.out.print(v + ", ");
         }
-
     }
 }

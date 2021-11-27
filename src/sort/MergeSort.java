@@ -52,6 +52,7 @@ public class MergeSort {
             assist[i++] = a[p2++];
         }
 
+        //将辅助数组索引lo~hi已排序完成的数组元素复制给原始数组相同位置
         if (hi + 1 - lo >= 0) System.arraycopy(assist, lo, a, lo, hi + 1 - lo);
     }
 

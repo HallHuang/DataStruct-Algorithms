@@ -3,7 +3,7 @@ package tree;
 import linear.Queue;
 
 /**
- * 保存键值对数据的二叉树(每个结点最多有两个子结点)
+ * 保存键值对数据的二叉树(每个结点最多有两个子结点,父结点键大于其子结点但小于其右结点)
  * 辅助成员变量：根结点：root，数据结点个数： N
  * Node(Key key, Value value, Node left, Node right)
  * @param <Key>

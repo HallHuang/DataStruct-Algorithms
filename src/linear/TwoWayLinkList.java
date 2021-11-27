@@ -1,6 +1,8 @@
 package linear;
 
+import java.util.Arrays;
 import java.util.Iterator;
+import java.util.List;
 
 /**
  * 双向链表
@@ -42,8 +44,8 @@ public class TwoWayLinkList<T> implements Iterable<T> {
     public Node getNode(int index) {
         if (!isEmpty()) {
             if (index < N && index >= 0) {
-                Node nextNode = head.next;
-                for (int i = 0; i < index; i++) {
+                Node nextNode = head;
+                for (int i = 0; i <= index; i++) {
                     nextNode = nextNode.next;
                 }
                 return nextNode;
@@ -108,7 +110,10 @@ public class TwoWayLinkList<T> implements Iterable<T> {
             head.next = newNode;
             last = newNode;
             N++;
+        } else {
+            throw new RuntimeException("索引值设置不正确");
         }
+
     }
 
     public T remove(int index) {
@@ -120,6 +125,7 @@ public class TwoWayLinkList<T> implements Iterable<T> {
             Node nextNode = curNode.next;
             preNode.next = nextNode;
             nextNode.pre = preNode;
+            curNode = null;
             N--;
             return curNode.item;
         } else {
@@ -230,6 +236,7 @@ public class TwoWayLinkList<T> implements Iterable<T> {
         ll1.insert("hwangl");
         ll1.insert("jinan");
         ll1.insert("shandong");
+        System.out.println("getNode: " + ll1.getNode(3).item);
         System.out.println(ll1);
         System.out.println("index=4: " + ll1.get(4));
         System.out.println("mid: " + ll1.getMid());

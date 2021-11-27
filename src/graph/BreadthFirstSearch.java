@@ -2,6 +2,10 @@ package graph;
 
 import linear.Queue;
 
+/**
+ * 广度优先搜索
+ *
+ */
 public class BreadthFirstSearch {
     private final boolean[] marked;
     private int count;
