@@ -130,10 +130,11 @@ public class TwoWayLinkList<T> implements Iterable<T> {
             return curNode.item;
         } else {
             Node oldLast = last;
+            T item = oldLast.item;
             last = oldLast.pre;
             last.next = null;
             N--;
-            return oldLast.item;
+            return item;
         }
     }
 

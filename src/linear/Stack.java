@@ -5,7 +5,7 @@ import java.util.Iterator;
 /**
  * 基于单向链表的栈的实现
  * 辅助变量只有head:数据结点、N:元素个数
- * 一端：首部入栈、首部出栈，先进后出
+ * 一端：首部入栈、首部出栈，先进后出(单端操作)
  */
 public class Stack<T> implements Iterable<T> {
 
@@ -61,10 +61,8 @@ public class Stack<T> implements Iterable<T> {
     }
 
     public void push(T t) {
-        //当前首结点
-        Node oldNode = head.next;
         //包含新数据的新结点，并指向当前首结点，head指向新结点
-        head.next = new Node(t, oldNode);
+        head.next = new Node(t, head.next);
         N++;
     }
 

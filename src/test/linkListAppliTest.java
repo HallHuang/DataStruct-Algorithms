@@ -15,7 +15,7 @@ public class linkListAppliTest {
         }
     }
 
-    //以first结点为期待呢，使用快慢指针判断是否有环
+    //以first结点为起点，使用快慢指针判断是否有环
     private static boolean isCircle(Node<String> first) {
         Node<String> fast = first;
         Node<String> slow = first;

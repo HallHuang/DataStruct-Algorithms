@@ -40,7 +40,7 @@ public class ReversePolishNotationTest {
                     result = o2 / o1;
                     stack.push(result);
                 }
-                default -> stack.push(Integer.parseInt(curr)); //将数字入栈
+                default -> stack.push(Integer.valueOf(curr)); //将数字入栈
             }
         }
         return result;
