@@ -8,7 +8,7 @@ import linear.Stack;
 public class BraketMatchTest {
 
     public static void main(String[] args) {
-        String matchedStr = "(中国(上海自由(贸易区)在浦江(法华录133号)))";
+        String matchedStr = "(中国(上海自由(贸易区)在浦江(法华路133号)))";
         String[] matched = isMatched(matchedStr);
         for (String s : matched) {
             System.out.println(s);

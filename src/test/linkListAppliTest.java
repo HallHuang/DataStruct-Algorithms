@@ -42,7 +42,7 @@ public class linkListAppliTest {
             fast = fast.next.next;
             slow = slow.next;
 
-            if (fast.equals(slow)) {
+            if (fast.equals(slow)) {//环存在
                 temp = first;
                 continue;
             }
