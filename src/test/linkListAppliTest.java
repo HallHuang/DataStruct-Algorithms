@@ -1,5 +1,7 @@
 package test;
 
+import java.util.*;
+
 /**
  * 基于快慢指针的链表环的判断与入口的查询
  */
@@ -75,5 +77,19 @@ public class linkListAppliTest {
         System.out.println(circle + "");
         Node<String> entrance = getEntrance(node1);
         System.out.println(entrance.item);
+
+        //Deque<String> queue = new ArrayDeque<>();
+        Queue<String> queue = new LinkedList<>();
+        //Deque<String> queue = new LinkedList<>();
+        queue.offer("jack");
+        queue.offer("mary");
+        queue.offer("tom");
+        queue.offer("sarah");
+
+        System.out.println(queue.peek());
+        System.out.println(queue);
+
+
+
     }
 }

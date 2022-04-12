@@ -3,7 +3,7 @@ package linear;
 import java.util.Iterator;
 
 /**
- * 有序符号表，按照键进行元素排序
+ * 有序符号表，按照键值从小到大进行元素排序
  * @param <Key>
  * @param <Value>
  */
@@ -56,7 +56,6 @@ public class OrderSymbolTable<Key extends Comparable<Key>, Value> implements Ite
     }
 
     public Value delete(Key key) {
-        //键查重，若重则删除，否则返回null
         Node node = head;
         while (node.next != null) {
             if (node.next.key.equals(key)) {

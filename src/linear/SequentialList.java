@@ -1,5 +1,6 @@
 package linear;
 
+import java.util.Arrays;
 import java.util.Iterator;
 
 /**
@@ -47,28 +48,25 @@ public class SequentialList<T> implements Iterable<T> {
     }
 
     private void reSize(int newSize) {
-        T[] temp = array;
-        array = (T[]) new Object[newSize];
-        if (N >= 0)
-            System.arraycopy(temp, 0, array, 0, N);
+        //T[] temp = array;
+        //array = (T[]) new Object[newSize];
+        //System.arraycopy(temp, 0, array, 0, N);
+        this.array = Arrays.copyOf(this.array, newSize);
     }
 
     public void insert(int i, T t) {
 
-        if (i > N) {//没紧接尾元素的越界
-            return;
-        }
-
-        if (i == N) {//在末尾之后添加元素时进行数组扩容
-            reSize(2 * array.length);
-            array[i] = t;
-            N++;
+        if (i > N || i < 0) {
             return;
         }
 
         //i后元素后移一位，末尾索引由N-1变为N
-        for (int k = i + 1; k <= N; k++) {
-            array[k] = array[k - 1];
+        if (N == array.length) {
+            reSize(2 * array.length);
+        }
+        T[] newArray = Arrays.copyOf(array, N);
+        for (int k = i; k <= N - 1; k++) {
+            array[k + 1] = newArray[k];
         }
         array[i] = t;
         N++;
@@ -138,6 +136,10 @@ public class SequentialList<T> implements Iterable<T> {
         sl1.insert("Bill");
         sl1.insert("Clinton");
         sl1.insert("Bush");
+        sl1.insert(1, "obama");
+        sl1.insert(6, "Biden");
+        sl1.insert(3, "Reagan");
+        sl1.insert(8, "Konnie");
 
         for (String s : sl1) {
             System.out.println(s);
