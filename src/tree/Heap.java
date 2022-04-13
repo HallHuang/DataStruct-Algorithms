@@ -56,20 +56,20 @@ public class Heap<T extends Comparable<T>> {
     private void sink(int k) {
         //只考虑非叶结点，找到根结点子树下的值最大对应的索引值，然后进行交换
         while (k <= N / 2) {
-            int max;
+            int maxIndex;
 
-            //存在右结点
+            //k索引对应位置的左右两个子节点的值较大所对应的索引值，即为其子树中的最大值
             if (2 * k + 1 <= N) {//子结点索引值小于N即表示存在该子结点
-                max = less(2 * k, 2 * k + 1) ? 2 * k + 1 : 2 * k;
+                maxIndex = less(2 * k, 2 * k + 1) ? 2 * k + 1 : 2 * k;
             } else {
-                max = 2 * k;
+                maxIndex = 2 * k;
             }
 
-            if (!less(k, max)) {
+            if (!less(k, maxIndex)) {
                 break;
             }
-            exch(k, max);
-            k = max;    //继续往下迭代直到全部完成
+            exch(k, maxIndex);
+            k = maxIndex;    //继续往下迭代直到全部完成
         }
     }
 

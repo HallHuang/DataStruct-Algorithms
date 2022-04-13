@@ -145,6 +145,5 @@ public class IndexMinPriorityQueue<T extends Comparable<T>> {
             System.out.println(impq.delMin());
         }//imp1=null
         System.out.println("----------------------");
-
     }
 }

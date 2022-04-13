@@ -145,6 +145,8 @@ public class SequentialList<T> implements Iterable<T> {
             System.out.println(s);
         }
 
+        System.out.println("get(10): " + sl1.get(10));
+
         System.out.println("index of Bill: " + sl1.indexOf("Bill"));
         System.out.println(sl1.get(1));
         System.out.println(sl1.remove(2));

@@ -2,8 +2,12 @@ package tree;
 
 import linear.Queue;
 
+import java.util.ArrayDeque;
+import java.util.Deque;
+import java.util.LinkedList;
+
 /**
- * 保存键值对数据的二叉树(每个结点最多有两个子结点,父结点键大于其子结点但小于其右结点)
+ * 保存键值对数据的二叉树(规定：每个结点最多有两个子结点,父结点键值key大于其左子结点但小于其右结点)
  * 辅助成员变量：根结点：root，数据结点个数： N
  * Node(Key key, Value value, Node left, Node right)
  * @param <Key>
@@ -109,8 +113,7 @@ public class BinaryTree<Key extends Comparable<Key>, Value> {
                 minNode = minNode.left;
             }
 
-            //如果x.right没有左子树， preNode.right = minNode.right;
-            //否则 preNode.left = minNode.right;
+            //如果x.right没有左子树，minNode = x.right, x.right = minNode.right; 否则向下最左侧迭代 preNode.left = minNode.right;
             if (preNode.key.equals(x.key)) {
                 preNode.right = minNode.right;  // minNode.right分为 null 和 nonNull两种情况
             } else {
@@ -118,7 +121,7 @@ public class BinaryTree<Key extends Comparable<Key>, Value> {
                 preNode.left = minNode.right;  // minNode.right分为 null 和 nonNull两种情况
             }
 
-            //x ==> minNode
+            //x 节点位置替换为 minNode
             minNode.left = x.left;
             minNode.right = x.right;
 
@@ -295,5 +298,6 @@ public class BinaryTree<Key extends Comparable<Key>, Value> {
         for (Integer item : keys2) {
             System.out.println(item);
         }
+
     }
 }
