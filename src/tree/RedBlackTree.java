@@ -38,8 +38,8 @@ public class RedBlackTree<Key extends Comparable<Key>, Value> {
         return x.color == RED;
     }
 
-    //结点h的右结点是红色结点时
-    //第2、3两步的执行顺序不能颠倒
+    //结点h的右结点是红色结点，h.right.color = RED
+    //先移位，再变色
     private Node rotateLeft(Node h) {
         Node x = h.right;
         h.right = x.left;
@@ -50,6 +50,7 @@ public class RedBlackTree<Key extends Comparable<Key>, Value> {
     }
 
     //结点x.left和x.left.left的颜色均为红色
+    //先移位，再变色
     private Node rotateRight(Node h) {
         Node x = h.left;
         h.left = x.right;

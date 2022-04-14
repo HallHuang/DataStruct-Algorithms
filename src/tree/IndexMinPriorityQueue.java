@@ -70,6 +70,7 @@ public class IndexMinPriorityQueue<T extends Comparable<T>> {
         swim(N);
     }
 
+    //对堆索引值为k的元素进行上浮操作
     private void swim(int k) {
         while (k > 1) {
             if (less(k, k / 2)) {

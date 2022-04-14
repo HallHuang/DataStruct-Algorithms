@@ -41,6 +41,7 @@ public class BinaryTree<Key extends Comparable<Key>, Value> {
         root = put(root, key, value);
     }
 
+    //在子树结点x下进行元素添加
     public Node put(Node x, Key key, Value value) {
         //当x.left/right = null触底时才新建结点
         if (x == null) {
@@ -84,6 +85,7 @@ public class BinaryTree<Key extends Comparable<Key>, Value> {
         delete(root, key);
     }
 
+    //子树x下删除指定key值的元素，要考虑删除结点后余下子树和上层结点的连接
     public Node delete(Node x, Key key) {
         if (x == null) {
             return null;
@@ -129,6 +131,8 @@ public class BinaryTree<Key extends Comparable<Key>, Value> {
             if (x.equals(root)) {
                 root = minNode;
             }
+
+            //新的根结点，代表删除操作完成后的新树
             x = minNode;
         }
         return x;   // x_father.left/right = x;
