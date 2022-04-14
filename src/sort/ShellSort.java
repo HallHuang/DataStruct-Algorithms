@@ -3,8 +3,8 @@ package sort;
 import java.util.Arrays;
 
 /**
- * 希尔排序：分组比较，间隔交换】
- * 时间复杂度：
+ * 希尔排序：分组比较，间隔交换
+ * 时间复杂度：O(n^s, 1<s<2)
  */
 public class ShellSort {
 
@@ -22,9 +22,11 @@ public class ShellSort {
         int h = 1;
         while (h < a.length / 2) {
             h = 2 * h + 1;
-        }//获取初始增长量,即h初值
+        }
+        //初始间隔值为大于（a.length/2）的最小奇数
+        System.out.println("h: " + h);
 
-        //变步长迭代更新，从后往前按照索引间隔h进行比较/交换
+        //变间隔值迭代更新，从后往前按照索引间隔h进行比较/交换
         while (h >= 1) {
             for (int i = h; i < a.length; i++) {//i=h, h+1, h+2, ..., a.length-1
                 for (int j = i; j >= h && greater(a[j - h], a[j]); j -= h) {
@@ -32,7 +34,7 @@ public class ShellSort {
                     exch(a, j - h, j);
                 }
             }
-            h = h / 2;  //h下一轮值更新
+            h = h / 2;  //下一轮h的更新值
         }
     }
 

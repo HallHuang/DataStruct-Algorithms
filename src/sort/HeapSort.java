@@ -39,45 +39,44 @@ public class HeapSort {
         while (N != 1) {
             exch(heap, 1, N);   //最大值放在末尾
             N--;
-            sink(heap, 1, N); //重排序，使索引1处的值当前最大
+            sink(heap, 1, N); //重下沉调整，使索引1处的值为当前最大
         }
         System.arraycopy(heap, 1, source, 0, source.length);
     }
 
     //使所有父结点的值均不小于子结点的值
     private static void sink(Comparable[] heap, int target, int range) {
-        //所有非叶子结点
+        //所有分支结点
         while ( target <= range / 2) {
-            int max;
+            int maxIndex;
 
-            //存在右结点
-            if (2 * target + 1 <= range) {
+            if (2 * target + 1 <= range) {//存在右子结点
                 //取两结点的值最大结点
-                max = less(heap, 2 * target, 2 * target + 1) ? 2 * target + 1 : 2 * target;
+                maxIndex = less(heap, 2 * target, 2 * target + 1) ? 2 * target + 1 : 2 * target;
             } else {
-                max = 2 * target;
+                maxIndex = 2 * target;
             }
 
-            if (!less(heap, target, max)) {
+            if (!less(heap, target, maxIndex)) {
                 break;
             }
-            exch(heap, target, max);
-            target = max;    //继续往下迭代直到全部完成
+            exch(heap, target, maxIndex);
+            target = maxIndex;    //继续往下迭代直到全部完成
         }
     }
 
     public static void main(String[] args) {
         String[] arr = {"sale", "ghud", "idhhs", "wjdb", "ojh", "pjxhx", "gdf", "root"};
 
-        System.out.println("直接使用已定义好的Heap类进行排序");
-        Heap<String> stringHeap = new Heap<>(arr.length + 1);
-        for (String s : arr) {
-            stringHeap.insert(s);
-        }
-        String result;
-        while ((result = stringHeap.delMax())!= null) {
-            System.out.println(result);
-        }
+//        System.out.println("直接使用已定义好的Heap类进行排序");
+//        Heap<String> stringHeap = new Heap<>(arr.length + 1);
+//        for (String s : arr) {
+//            stringHeap.insert(s);
+//        }
+//        String result;
+//        while ((result = stringHeap.delMax())!= null) {
+//            System.out.println(result);
+//        }
 
         System.out.println("利用堆原理独立进行排序");
         HeapSort.sort(arr);

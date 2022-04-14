@@ -69,6 +69,7 @@ public class RedBlackTree<Key extends Comparable<Key>, Value> {
 
     public void put(Key key, Value val) {
         root = put(root, key, val);
+        System.out.println(root.key);
         root.color = BLACK; //根结点颜色是黑色的
     }
 
@@ -90,16 +91,18 @@ public class RedBlackTree<Key extends Comparable<Key>, Value> {
         }
 
         //x树添加修改完成后对x结点处进行平衡化处理
+
+        //左旋
         if (isRed(x.right) && !isRed(x.left)) {
             x = rotateLeft(x);
         }
 
-        //进行右旋：当当前结点h的左子结点和左子结点的左子结点都为红色，需要右旋
+        //右旋
         if (isRed(x.left) && isRed(x.left.left)) {
             x = rotateRight(x);
         }
 
-        //颜色反转：当前结点的左子结点和右子结点都为红色时，需要颜色反转
+        //颜色反转
         if (isRed(x.left) && isRed(x.right)) {
             flipColors(x);
         }

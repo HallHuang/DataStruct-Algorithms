@@ -1,6 +1,8 @@
 package sort;
 
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * 快速排序：首元中界，左右递归
@@ -29,7 +31,7 @@ public class QuickSort {
             return;
         }
 
-        int partition = partition(a, lo, hi);   //进行两边分组,返回分界索引值
+        int partition = partition(a, lo, hi);   //进行两边分组,返回分界中间元素的索引值
         sort(a, lo, partition - 1); //左半组递归
         sort(a, partition + 1, hi); //右半组递归
     }
@@ -43,14 +45,14 @@ public class QuickSort {
         while (true) {
             //先从右往左遍历查找小于key的元素对应的索引值，找到一个就跳出循环
             while (less(key, a[--right])) {
-                if (right == lo) {
+                if (right == lo) {//抵达数组左边界
                     break;
                 }
             }
 
             //之后从左往右遍历查找大于key的元素对应的索引
             while (less(a[++left], key)) {
-                if (left == hi) {
+                if (left == hi) {//抵达数组右边界
                     break;
                 }
             }
@@ -60,12 +62,14 @@ public class QuickSort {
             }
             exch(a, left, right);
         }
-        exch(a, lo, right);
+        exch(a, lo, right); //最后，将预设中间值放在合适位置，从而实现左小右大
         return right;
     }
 
     public static void main(String[] args) {
         Integer[] arr = {6, 7, 11, 1, 9, 2, 5, 10, 4, 3, 8, 0};
+        List<Integer> list = Arrays.asList(arr);
+        Collections.shuffle(list);
         QuickSort.sort(arr);
         System.out.println(Arrays.toString(arr));
     }
