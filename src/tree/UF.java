@@ -11,7 +11,7 @@ public class UF {
 
     private final int[] eleAndGroup;  //分组标识号数组 或者 索引代表的结点的父结点标识数组
     private int count;  //分组数，默认为元素个数
-    private final int[] sz;   //UF_TREE_Weighted,每个根结点下子结点总数
+    private final int[] sz;   //UF_TREE_Weighted,每个结点下所有子结点总数
 
     public UF(int N) {
         this.count = N;
@@ -67,7 +67,6 @@ public class UF {
             return;
         }
 
-        //UF_Tree, 一组的终父结点的父结点设置为二组的终父结点
         //eleAndGroup[pRoot] = qRoot;
         //UF_Tree_Weighted,小树合并到大树上
         if (sz[pRoot] < sz[qRoot]) {
@@ -87,6 +86,7 @@ public class UF {
         Scanner sc = new Scanner(System.in);
 
         do {
+            System.out.println("输入一个0~4的数字");
             System.out.println("请输入第一个要合并的元素：");
             int p = sc.nextInt();
             System.out.println("请输入第二个要合并的元素：");
