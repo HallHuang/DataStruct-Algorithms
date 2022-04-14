@@ -75,7 +75,7 @@ public class SequentialList<T> implements Iterable<T> {
 
     public T remove(int i) {
 
-        if (i > N - 1) {
+        if (i > N - 1 || i < 0) {
             return null;
         }
 
@@ -141,18 +141,18 @@ public class SequentialList<T> implements Iterable<T> {
         sl1.insert(3, "Reagan");
         sl1.insert(8, "Konnie");
 
+        sl1.remove(2);
+        sl1.remove(3);
         for (String s : sl1) {
             System.out.println(s);
         }
 
         System.out.println("get(10): " + sl1.get(10));
-
         System.out.println("index of Bill: " + sl1.indexOf("Bill"));
         System.out.println(sl1.get(1));
         System.out.println(sl1.remove(2));
         System.out.println(sl1.size());
         sl1.clear();
         System.out.println(sl1.size());
-
     }
 }

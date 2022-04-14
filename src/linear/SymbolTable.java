@@ -47,7 +47,7 @@ public class SymbolTable<Key, Value> implements Iterable<Value> {
             node = node.next;
         }
 
-        //head指向最近添加的元素
+        //出现新key(新数据),head指向该新添加元素
         Node oldFirst = head.next;
         head.next = new Node(key, value, oldFirst);
         N++;

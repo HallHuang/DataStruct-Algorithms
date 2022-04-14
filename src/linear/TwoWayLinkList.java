@@ -111,7 +111,7 @@ public class TwoWayLinkList<T> implements Iterable<T> {
             last = newNode;
             N++;
         } else {
-            throw new RuntimeException("索引值设置不正确");
+            throw new RuntimeException("链表数据元素为空，索引值设置不正确");
         }
 
     }
