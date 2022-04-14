@@ -36,10 +36,10 @@ public class MergeSort {
         int p2 = mid + 1;
 
         while (p1 <= mid && p2 <= hi) {
-            if (less(a[p2], a[p1])) {
-                assist[i++] = a[p2++];
+            if (less(a[p2], a[p1])) {//每次比较将较小值放入数组中，而且每次只有一个指针自增
+                assist[i++] = a[p2++];  //p2+1;p1+0
             } else {
-                assist[i++] = a[p1++];
+                assist[i++] = a[p1++];  //p2+0;p1+1
             }
         }
 
