@@ -9,7 +9,7 @@ public class RedBlackTree<Key extends Comparable<Key>, Value> {
     private Node root;
     private int N;
     private static final boolean RED = true;
-    public static final boolean BLACK = false;
+    private static final boolean BLACK = false;
 
     private class Node {
         private final Key key;
